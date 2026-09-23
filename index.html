@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КГП на ПХВ "Ерейментау Су Арнасы"</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        water: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-water-500 selection:text-white">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-water-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-water-500/20">
+                    <i class="fa-solid fa-droplet text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg sm:text-xl text-slate-900 tracking-tight" data-i18n="company_name">КГП на ПХВ "Ерейментау Су Арнасы"</h1>
+                    <p class="text-xs text-slate-500" data-i18n="company_subtitle">Официальный информационный портал</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <!-- Language Toggle Button -->
+                <button id="langToggle" onclick="toggleLanguage()" class="flex items-center space-x-2 bg-water-50 hover:bg-water-100 text-water-800 font-medium px-4 py-2 rounded-xl transition border border-water-200 shadow-sm">
+                    <i class="fa-solid fa-globe text-water-600"></i>
+                    <span id="langText" class="text-sm font-semibold">ҚАЗ / РУС</span>
+                </button>
+
+                <!-- Admin Mode Toggle for Adding Notices -->
+                <button onclick="checkAdminAccess()" class="hidden md:flex items-center space-x-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-sm font-medium transition border border-slate-200">
+                    <i id="adminLockIcon" class="fa-solid fa-lock text-xs text-slate-500"></i>
+                    <span id="adminBtnText" data-i18n="admin_panel">Панель управления</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative bg-gradient-to-br from-water-900 via-water-800 to-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-water-700/50 backdrop-blur border border-water-500/30 px-3 py-1 rounded-full text-xs font-semibold text-water-200">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span data-i18n="status_active">Штатный режим работы</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight" data-i18n="hero_title">
+                        Подача воды по распределительным сетям и отвод сточных вод
+                    </h2>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-light" data-i18n="hero_desc">
+                        Коммунальное государственное предприятие на праве хозяйственного ведения "Ерейментау Су Арнасы" при акимате Ерейментауского района
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#notices" class="bg-water-500 hover:bg-water-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-water-500/30 transition flex items-center space-x-2">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <span data-i18n="btn_notices">Смотреть уведомления</span>
+                        </a>
+                        <a href="#contacts" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold px-6 py-3 rounded-xl backdrop-blur transition flex items-center space-x-2">
+                            <i class="fa-solid fa-phone"></i>
+                            <span data-i18n="btn_contacts">Контакты</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Contacts Card -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-3xl p-6 shadow-2xl space-y-4">
+                    <h3 class="text-lg font-bold border-b border-white/10 pb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-address-card text-water-400"></i>
+                        <span data-i18n="contacts_header">Контакты диспетчерской</span>
+                    </h3>
+                    <div class="space-y-3 text-sm text-slate-200">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-water-400"></i>
+                            <div>
+                                <p class="font-medium text-white" data-i18n="address_title">Адрес:</p>
+                                <p class="text-slate-300" data-i18n="address_val">г. Ерейментау, ул. Абылайхана, 96</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-phone-volume mt-1 text-water-400"></i>
+                            <div>
+                                <p class="font-medium text-white" data-i18n="dispatch_title">Диспетчерская служба (круглосуточно):</p>
+                                <a href="tel:+77163321451" class="text-water-300 hover:underline font-semibold">+7 (71633) 2-14-51</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-envelope mt-1 text-water-400"></i>
+                            <div>
+                                <p class="font-medium text-white" data-i18n="email_title">Электронная почта:</p>
+                                <a href="mailto:ersa2006@mail.ru" class="text-water-300 hover:underline">ersa2006@mail.ru</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="notices" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-slate-200">
+                <div>
+                    <span class="text-water-600 font-semibold text-sm uppercase tracking-wider" data-i18n="section_tag">Документация и объявления</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1" data-i18n="section_title">Уведомления, тарифы и файлы</h2>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                    <button id="topAddBtn" onclick="checkAdminAccess()" class="bg-water-600 hover:bg-water-700 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition shadow-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span data-i18n="add_notice_btn">Добавить объявление</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notice Feed List -->
+            <div id="noticeFeed" class="space-y-6">
+                <!-- Dynamically populated items will appear here, newest on top -->
+            </div>
+        </section>
+
+        <section id="contacts" class="bg-slate-100 border-t border-slate-200 py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900" data-i18n="full_contacts_title">Реквизиты и контакты</h2>
+                    <p class="text-slate-600 mt-2" data-i18n="full_contacts_subtitle">Свяжитесь с нами по любым вопросам водоснабжения и тарифов</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="w-10 h-10 bg-water-50 text-water-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg" data-i18n="org_details">Организация</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="org_details_val">
+                            КГП на ПХВ "Ерейментау Су Арнасы" при акимате Ерейментауского района<br>БИН: 060740002597
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="w-10 h-10 bg-water-50 text-water-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg" data-i18n="work_hours">Режим работы</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="work_hours_val">
+                            Понедельник — Пятница: 09:00 – 18:00<br>Обеденный перерыв: 13:00 – 14:00<br>Суббота, Воскресенье: Выходной (Аварийная — круглосуточно)
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="w-10 h-10 bg-water-50 text-water-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-file-shield"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg" data-i18n="deployment_info">Дополнительная информация</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed" data-i18n="deployment_info_val">
+                            Телефоны: Директор +7 (71633) 2-28-36, бухгалтерия 2-18-06
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 px-4 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-sm space-y-4 md:space-y-0">
+            <p>© 2026 КГП на ПХВ "Ерейментау Су Арнасы". Все права защищены.</p>
+            <div class="flex space-x-6">
+                <a href="#notices" class="hover:text-white transition" data-i18n="footer_notices">Уведомления</a>
+                <a href="#contacts" class="hover:text-white transition" data-i18n="footer_contacts">Контакты</a>
+                <button onclick="checkAdminAccess()" class="hover:text-water-400 transition" data-i18n="footer_admin">Добавить материал</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно авторизации (Пароль) -->
+    <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-water-600"></i>
+                    <span>Авторизация создателя</span>
+                </h3>
+                <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Пароль доступа</label>
+                    <input type="password" id="adminPasswordInput" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" placeholder="Введите пароль...">
+                    <p id="loginErrorMsg" class="text-red-500 text-xs mt-1.5 hidden font-medium">Неверный пароль!</p>
+                </div>
+                <div class="pt-2 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="closeAuthModal()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition">Отмена</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-water-600 hover:bg-water-700 text-white text-sm font-medium shadow-md shadow-water-500/20 transition">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления объявления с генератором кода для GitHub -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-3">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-plus text-water-600"></i>
+                        <span>Панель управления / Генератор кода</span>
+                    </h3>
+                </div>
+                <button onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Панель управления сессией -->
+            <div class="flex items-center justify-between bg-water-50 p-3 rounded-xl border border-water-100 text-xs">
+                <span class="text-water-800 font-medium">🔓 Режим администратора активен</span>
+                <button type="button" onclick="logoutAdmin()" class="text-red-600 hover:underline font-semibold">Выйти</button>
+            </div>
+
+            <form id="noticeForm" onsubmit="handleNoticeSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Заголовок (на русском)</label>
+                    <input type="text" id="inputRuTitle" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" placeholder="Например: Отключение водоснабжения 25 июня">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Заголовок (на казахском / қазақша)</label>
+                    <input type="text" id="inputKzTitle" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" placeholder="Мысалы: 25 маусымда су беруді тоқтату">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Текст / описание (на русском)</label>
+                    <textarea id="inputRuDesc" rows="3" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" placeholder="Подробная информация об объявлении..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Текст / описание (на казахском / қазақша)</label>
+                    <textarea id="inputKzDesc" rows="3" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" placeholder="Хабарландырудың толық сипаттамасы..."></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Название файла для скачивания</label>
+                        <input type="text" id="inputFileName" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" placeholder="Приказ_Тариф_2026.pdf">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Ссылка на файл (путь)</label>
+                        <input type="text" id="inputFileUrl" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-water-500 text-sm" value="files/sample.pdf" placeholder="files/tarif.pdf">
+                    </div>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="toggleAdminModal()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition">Отмена</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-water-600 hover:bg-water-700 text-white text-sm font-medium shadow-md shadow-water-500/20 transition">Добавить и сгенерировать код</button>
+                </div>
+            </form>
+
+            <!-- Блок сгенерированного кода для копирования на GitHub -->
+            <div id="codeOutputContainer" class="hidden mt-6 pt-6 border-t border-slate-200 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-bold text-slate-800">📋 Скопируйте этот блок и вставьте в массив <code class="bg-slate-100 px-1 py-0.5 rounded text-water-700">notices</code> на GitHub:</h4>
+                    <button onclick="copyGeneratedCode()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1">
+                        <i class="fa-solid fa-copy"></i> Копировать код
+                    </button>
+                </div>
+                <textarea id="generatedCodeArea" readonly rows="7" class="w-full bg-slate-900 text-emerald-400 font-mono text-xs p-3 rounded-xl focus:outline-none"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dictionary for bilingual toggle (RU / KZ)
+        const translations = {
+            ru: {
+                company_name: 'КГП на ПХВ "Ерейментау Су Арнасы"',
+                company_subtitle: 'Официальный информационный портал',
+                admin_panel: 'Панель управления',
+                status_active: 'Штатный режим работы',
+                hero_title: 'Подача воды по распределительным сетям и отвод сточных вод',
+                hero_desc: 'Коммунальное государственное предприятие на праве хозяйственного ведения "Ерейментау Су Арнасы" при акимате Ерейментауского района',
+                btn_notices: 'Смотреть уведомления',
+                btn_contacts: 'Контакты',
+                contacts_header: 'Контакты диспетчерской',
+                address_title: 'Адрес:',
+                address_val: 'г. Ерейментау, ул. Абылайхана, 96',
+                dispatch_title: 'Диспетчерская служба (круглосуточно):',
+                email_title: 'Электронная почта:',
+                section_tag: 'Документация и объявления',
+                section_title: 'Уведомления, тарифы и файлы',
+                add_notice_btn: 'Добавить объявление',
+                full_contacts_title: 'Реквизиты и контакты',
+                full_contacts_subtitle: 'Свяжитесь с нами по любым вопросам водоснабжения и тарифов',
+                org_details: 'Организация',
+                org_details_val: 'КГП на ПХВ "Ерейментау Су Арнасы" при акимате Ерейментауского района<br>БИН: 060740002597',
+                work_hours: 'Режим работы',
+                work_hours_val: 'Понедельник — Пятница: 09:00 – 18:00<br>Обеденный перерыв: 13:00 – 14:00<br>Суббота, Воскресенье: Выходной (Аварийная — круглосуточно)',
+                deployment_info: 'Дополнительная информация',
+                deployment_info_val: 'Телефоны: Директор +7 (71633) 2-28-36, бухгалтерия 2-18-06',
+                footer_notices: 'Уведомления',
+                footer_contacts: 'Контакты',
+                footer_admin: 'Добавить материал',
+                download_btn: 'Скачать файл',
+                published_at: 'Опубликовано:'
+            },
+            kz: {
+                company_name: '«Ерейментау Су Арнасы» ШЖҚ КМК',
+                company_subtitle: 'Ресми ақпараттық порталы',
+                admin_panel: 'Басқару панелі',
+                status_active: 'Штаттіқ жұмыс режимі',
+                hero_title: 'Бөлу желілері арқылы су беру және сарынды суларды бұру',
+                hero_desc: 'Ерейментау ауданы әкімдігі жанындағы шаруашылық жүргізу құқығындағы «Ерейментау Су Арнасы» коммуналдық мемлекеттік кәсіпорны',
+                btn_notices: 'Хабарландыруларды көру',
+                btn_contacts: 'Байланыстар',
+                contacts_header: 'Диспетчерлік қызмет',
+                address_title: 'Мекенжайы:',
+                address_val: 'Ерейментау қ., Абылай хан көш., 96',
+                dispatch_title: 'Диспетчерлік қызмет (тәулік бойы):',
+                email_title: 'Электрондық пошта:',
+                section_tag: 'Құжаттама және хабарландырулар',
+                section_title: 'Хабарландырулар, тарифтер және файлдар',
+                add_notice_btn: 'Хабарландыру қосу',
+                full_contacts_title: 'Реквизиттер мен байланыстар',
+                full_contacts_subtitle: 'Сумен жабдықтау және тарифтер бойынша кез келген сұрақтармен хабарласыңыз',
+                org_details: 'Ұйым',
+                org_details_val: 'Ерейментау ауданы әкімдігі жанындағы «Ерейментау Су Арнасы» ШЖҚ КМК<br>БСН: 060740002597',
+                work_hours: 'Жұмыс кестесі',
+                work_hours_val: 'Дүйсенбі — Жұма: 09:00 – 18:00<br>Түскі үзіліс: 13:00 – 14:00<br>Сенбі, Жексенбі: Демалыс (Апаттық қызмет — тәулік бойы)',
+                deployment_info: 'Қосымша ақпарат',
+                deployment_info_val: 'Телефондар: Директор +7 (71633) 2-28-36, бухгалтерия 2-18-06',
+                footer_notices: 'Хабарландырулар',
+                footer_contacts: 'Байланыстар',
+                footer_admin: 'Материал қосу',
+                download_btn: 'Файлды жүктеу',
+                published_at: 'Жарияланған уақыты:'
+            }
+        };
+
+        const ADMIN_PASSWORD = '123456'; // Пароль для доступа
+        let currentLang = 'ru';
+
+        // Базовые уведомления
+        let defaultNotices = [
+            {
+                id: 1,
+                ru: {
+                    title: 'Утверждение новых тарифов на услуги водоснабжения и водоотведения с 1 июля 2026 года',
+                    desc: 'В соответствии с приказом Департамента Комитета по регулированию естественных монополий по Акмолинской области, вводятся в действие новые дифференцированные тарифы для населения и юридических лиц.',
+                    fileName: 'Приказ_Тариф_2026.pdf'
+                },
+                kz: {
+                    title: '2026 жылғы 1 шілдеден бастап сумен жабдықтау және су бұру қызметтеріне жаңа тарифтерді бекіту',
+                    desc: 'Ақмола облысы бойынша табиғи монополияларды реттеу комитеті Департаментінің бұйрығына сәйкес, халық пен заңды тұлғалар үшін жаңа сараланған тарифтер қолданысқа енгізіледі.',
+                    fileName: 'Тариф_Жарлығы_2026.pdf'
+                },
+                fileUrl: '#',
+                timestamp: '23.06.2026, 11:30'
+            },
+            {
+                id: 2,
+                ru: {
+                    title: 'Уведомление о плановых промывках и дезинфекции резервуаров чистой воды',
+                    desc: 'Уважаемые абоненты! 27 июня 2026 года с 09:00 до 17:00 будут проводиться профилактические работы на водоочистных сооружениях. Возмочно временное понижение давления воды.',
+                    fileName: 'График_промывки_июнь.docx'
+                },
+                kz: {
+                    title: 'Таза су резервуарларын жоспарлы жуу және дезинфекциялау туралы хабарлама',
+                    desc: 'Құрметті абоненттер! 2026 жылғы 27 маусымда сағат 09:00-ден 17:00-ге дейін су тазарту құрылыстарында профилактикалық жұмыстар жүргізіледі. Су қысымының уақытша төмендеуі мүмкін.',
+                    fileName: 'Жуу_Кестеси_маусым.docx'
+                },
+                fileUrl: '#',
+                timestamp: '22.06.2026, 14:15'
+            }
+        ];
+
+        // Загрузка из памяти браузера ПК
+        let notices = JSON.parse(localStorage.getItem('ereymentau_notices')) || defaultNotices;
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ru' ? 'kz' : 'ru';
+            document.documentElement.lang = currentLang;
+            updateTexts();
+            renderNotices();
+        }
+
+        function updateTexts() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+        }
+
+        function checkAdminAccess() {
+            if (sessionStorage.getItem('is_admin') === 'true') {
+                toggleAdminModal();
+            } else {
+                openAuthModal();
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('loginErrorMsg').classList.add('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPasswordInput').value;
+            const errorMsg = document.getElementById('loginErrorMsg');
+
+            if (pass === ADMIN_PASSWORD) {
+                sessionStorage.setItem('is_admin', 'true');
+                closeAuthModal();
+                updateAdminStateUI();
+                toggleAdminModal();
+                renderNotices(); // Перерисовываем для появления кнопок удаления
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('is_admin');
+            toggleAdminModal();
+            updateAdminStateUI();
+            renderNotices(); // Убираем кнопки удаления
+            alert('Вы вышли из панели управления.');
+        }
+
+        function updateAdminStateUI() {
+            const isAdmin = sessionStorage.getItem('is_admin') === 'true';
+            const icon = document.getElementById('adminLockIcon');
+            if (isAdmin) {
+                icon.className = "fa-solid fa-lock-open text-xs text-emerald-600";
+            } else {
+                icon.className = "fa-solid fa-lock text-xs text-slate-500";
+            }
+        }
+
+        function toggleAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+            document.getElementById('codeOutputContainer').classList.add('hidden');
+            document.getElementById('noticeForm').reset();
+        }
+
+        // Функция удаления объявления сразу на обоих языках
+        function deleteNotice(id) {
+            if (confirm('Вы действительно хотите удалить это уведомление (на русском и казахском языках)?')) {
+                notices = notices.filter(n => n.id !== id);
+                localStorage.setItem('ereymentau_notices', JSON.stringify(notices));
+                renderNotices();
+            }
+        }
+
+        // Добавление в локальную память ПК и генерация кода для GitHub
+        function handleNoticeSubmit(e) {
+            e.preventDefault();
+            const ruTitle = document.getElementById('inputRuTitle').value;
+            const kzTitle = document.getElementById('inputKzTitle').value;
+            const ruDesc = document.getElementById('inputRuDesc').value;
+            const kzDesc = document.getElementById('inputKzDesc').value;
+            const fileName = document.getElementById('inputFileName').value || 'Документ.pdf';
+            const fileUrl = document.getElementById('inputFileUrl').value || '#';
+
+            const now = new Date();
+            const timestamp = now.toLocaleDateString('ru-RU') + ', ' + now.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'});
+
+            const newNotice = {
+                id: Date.now(),
+                ru: { title: ruTitle, desc: ruDesc, fileName: fileName },
+                kz: { title: kzTitle, desc: kzDesc, fileName: fileName },
+                fileUrl: fileUrl,
+                timestamp: timestamp
+            };
+
+            notices.unshift(newNotice); // Добавляем наверх
+            localStorage.setItem('ereymentau_notices', JSON.stringify(notices));
+            renderNotices();
+
+            // Формируем готовый JS-код для вставки в массив notices на GitHub
+            const codeString = `    {
+        id: ${newNotice.id},
+        ru: {
+            title: '${ruTitle.replace(/'/g, "\\'")}',
+            desc: '${ruDesc.replace(/'/g, "\\'")}',
+            fileName: '${fileName}'
+        },
+        kz: {
+            title: '${kzTitle.replace(/'/g, "\\'")}',
+            desc: '${kzDesc.replace(/'/g, "\\'")}',
+            fileName: '${fileName}'
+        },
+        fileUrl: '${fileUrl}',
+        timestamp: '${timestamp}'
+    },`;
+
+            document.getElementById('generatedCodeArea').value = codeString;
+            document.getElementById('codeOutputContainer').classList.remove('hidden');
+        }
+
+        function copyGeneratedCode() {
+            const textArea = document.getElementById('generatedCodeArea');
+            textArea.select();
+            document.execCommand('copy');
+            alert('Код успешно скопирован! Теперь вставьте его в самый верх массива notices в index.html на GitHub.');
+        }
+
+        function renderNotices() {
+            const container = document.getElementById('noticeFeed');
+            container.innerHTML = '';
+
+            const isAdmin = sessionStorage.getItem('is_admin') === 'true';
+
+            notices.forEach(notice => {
+                const data = notice[currentLang];
+                const downloadText = translations[currentLang].download_btn;
+                const publishedText = translations[currentLang].published_at;
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition p-6 sm:p-8 space-y-4 relative';
+
+                // Кнопка удаления видна только авторизованному администратору
+                let deleteButtonHtml = '';
+                if (isAdmin) {
+                    deleteButtonHtml = `
+                        <button onclick="deleteNotice(${notice.id})" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5" title="Удалить на русском и казахском">
+                            <i class="fa-solid fa-trash-can"></i> Удалить пункт
+                        </button>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                        <span class="inline-flex items-center space-x-1.5 text-xs font-semibold bg-water-50 text-water-700 px-3 py-1 rounded-full w-fit">
+                            <i class="fa-solid fa-bullhorn text-water-500"></i>
+                            <span>Официальное уведомление / Ресми хабарландыру</span>
+                        </span>
+                        <div class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
+                            <div class="text-xs text-slate-400 flex items-center space-x-1.5">
+                                <i class="fa-regular fa-clock"></i>
+                                <span>${publishedText} ${notice.timestamp}</span>
+                            </div>
+                            ${deleteButtonHtml}
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight mb-2">${data.title}</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">${data.desc}</p>
+                    </div>
+                    <div class="pt-2 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-4">
+                        <div class="flex items-center space-x-2 text-xs text-slate-500">
+                            <i class="fa-solid fa-file-arrow-down text-water-600 text-base"></i>
+                            <span class="font-medium">${data.fileName}</span>
+                        </div>
+                        <a href="${notice.fileUrl}" download class="inline-flex items-center space-x-2 bg-water-50 hover:bg-water-100 text-water-700 font-semibold px-4 py-2 rounded-xl text-sm transition border border-water-200 shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>${downloadText}</span>
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Run on load
+        window.onload = function() {
+            renderNotices();
+            updateAdminStateUI();
+        };
+    </script>
+</body>
+</html>
